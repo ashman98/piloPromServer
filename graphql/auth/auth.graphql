@@ -1,0 +1,51 @@
+extend type Query{
+    csrfToken: String @field(resolver: "App\\GraphQL\\Queries\\CsrfToken")
+    me: User @guard @auth
+}
+
+extend type Mutation{
+    createUser(input: CreateUserInput! @spread): RegisterResponse @field(resolver: "AuthMutator@register")
+    login(input: LoginInput! @spread):LoginResponse! @field(resolver: "AuthMutator@login")
+    logout: Response @field(resolver: "AuthMutator@logout")
+    refreshToken(refresh_token: String!): RefreshTokenResponse @field(resolver: "AuthMutator@refreshToken")
+    sendEmailVerifyNotice(user_id: ID!): Response @field(resolver:  "AuthMutator@sendEmailVerifyNotice")
+    emailVerification(user_id: ID!, verify_code: Int!): Response @field(resolver:  "AuthMutator@emailVerification")
+}
+
+
+type LoginResponse{
+    user: User!
+    access_token: String!
+    response: Response!
+}
+
+
+type RegisterResponse{
+    user: User!
+    response: Response!
+}
+
+type RefreshTokenResponse{
+    access_token: String!
+    response: Response!
+}
+
+input CreateUserInput @validator {
+    name: String!,
+    surname: String!
+    email: String!,
+    password: String!,
+    password_confirmation: String!,
+    role: String!,
+    address: String!,
+    city: String!,
+    state: String!,
+    zip: Int!,
+    phone: String!
+}
+
+input LoginInput @validator {
+    email: String!,
+    password: String!,
+}
+

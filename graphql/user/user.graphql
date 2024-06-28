@@ -1,0 +1,34 @@
+extend type Query{
+    users(
+        orderBy: _ @orderBy(columns: ["id"])
+    ): [User]!
+    @paginate(
+        model: "\\App\\Models\\User",
+        defaultCount: 10,
+        maxCount: 50
+    )
+    @guard
+}
+#first: Int!
+#@field(resolver: "App\\GraphQL\\Queries\\UserQuery")
+interface Named {
+    name: String!
+}
+
+type User implements Named{
+    id: ID!
+    name: String!
+    surname: String!
+    phone: String!
+    email: String!
+    address: String!
+    city: String!
+    state: String!
+    zip: Int!
+    role: [Role!]! @hasMany(relation: "roles", type: PAGINATOR)
+}
+
+type Role{
+    id: ID!
+    name: String!
+}
