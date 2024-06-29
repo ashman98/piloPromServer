@@ -11,8 +11,10 @@ if [[ "${!ENV_VAR_NAME}" = "true" ]]; then
   php artisan down
 fi
 
+composer install --optimize-autloader --no-dev
+
 # Build assets using NPM
-npm run build
+#npm run build
 
 # Clear cache
 php artisan optimize:clear
