@@ -35,10 +35,9 @@ Route::get('/', [\App\Http\Controllers\HomeController::class, 'index']);
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
-Auth::routes(['verify' => true]);
-
-Route::get('/home', 'HomeController@index')->name('home');
+//Auth::routes(['verify' => true]);
+//Route::get('/home', 'HomeController@index')->name('home');
